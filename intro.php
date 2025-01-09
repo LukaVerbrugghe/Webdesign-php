@@ -31,8 +31,10 @@ width: 1080px;
 	<main>
 		<?php
 			// Hier komt php code
-			echo "Hello, world!";
-			echo "Ik ben niet Danny Devriendt (in 1 woord met dt)"
+			$mijnnaam = "niet Danny Devriendt (in 1 woord met dt)";
+			echo "<p>Hello, world!</p>";
+			echo "<p>Ik ben $mijnnaam</p>";
+			echo '<p>Ik ben '.$mijnnaam.'</p>';
 		?>
 	</main>
 	<footer>&nbsp;</footer>
