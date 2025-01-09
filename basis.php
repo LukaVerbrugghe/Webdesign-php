@@ -28,13 +28,7 @@ width: 1080px;
 <body>
 <div id="wrapper">
 	<header><img src="images/banner.jpg" width="100%"  alt=""/></header>
-	<main>
-		<?php
-			// Hier komt php code
-			echo "Hello, world!";
-			echo "Ik ben niet Danny Devriendt (in 1 woord met dt)"
-		?>
-	</main>
+	<main></main>
 	<footer>&nbsp;</footer>
 </div>
 </body>
