@@ -1,3 +1,32 @@
+<?php
+	// ophalen waarden uit verstuurde formulier
+	$gekozenLetter = $_POST['txtLetter'];
+	// het woord uit de andere textbox halen
+	$woord = $_POST['txtWoord'];
+	
+	if($gekozenLetter == ""){
+		$output = "<p>U heeft geen letter gekozen.</p>\n";
+	}
+	else{
+		if(strlen($gekozenLetter) > 1){
+			$output = "<p>U heeft te veel letters gekozen.</p>\n";
+		}
+		else{
+			$output = "<p>U heeft $gekozenLetter gekozen.</p>\n";
+			// Hier komen we uit als de gekozen letter correct is
+			if($woord == ""){
+				$output .= "<p>U heeft geen woord gekozen.</p>\n";
+			}
+			else{
+				//zowel het woord als de letter zijn in orde, we zetten deze om naar kleine lettertjes om problemen te vermijden
+				$woord = strtolower($woord);
+				$gekozenLetter = strtolower($gekozenLetter);
+				$aantalkeerVoorgekomen = substr_count($woord, $gekozenLetter);
+				$output = "<p>De letter $gekozenLetter komt $aantalkeerVoorgekomen keer voor in het woord $woord.</p>\n";
+			}
+		}
+	}
+?>
 <!doctype html>
 <html>
 <head>
@@ -53,17 +82,20 @@ font-size: 1.3em;
 <table width="100%"  border="0">
   <tr>
     <td>Letter of teken</td>
-    <td><input name="txtLetter" type="text" id="txtLetter" size="2" /></td>
+    <td><input name="txtLetter" type="text" id="txtLetter" size="2" value="<?php echo $gekozenLetter; ?>"/></td>
   </tr>
   <tr>
     <td>in woord</td>
-    <td><input name="txtWoord" type="text" id="txtWoord" maxlength="30" /></td>
+    <td><input name="txtWoord" type="text" id="txtWoord" maxlength="30" value="<?php echo $woord; ?>"/></td>
   </tr>
   <tr>
     <td>&nbsp;</td>
     <td><input type="submit" name="btnResultaat" id="btnResultaat" value="Resultaat" /></td>
   </tr>
 </table>
+<?php
+	echo $output;
+?>
 </form>
     </main>
 	<footer>&nbsp;</footer>
