@@ -3,7 +3,9 @@
 	$gekozenLetter = $_POST['txtLetter'];
 	// het woord uit de andere textbox halen
 	$woord = $_POST['txtWoord'];
-	
+	//hoofdlettergevoeligheid uit de checkbox halen
+	$hoofdlettergevoelig = $_POST['chkHoofdlettergevoelig'];
+	//printen in de console
 	if($gekozenLetter == ""){
 		$output = "<p>U heeft geen letter gekozen.</p>\n";
 	}
@@ -19,8 +21,11 @@
 			}
 			else{
 				//zowel het woord als de letter zijn in orde, we zetten deze om naar kleine lettertjes om problemen te vermijden
-				$woord = strtolower($woord);
-				$gekozenLetter = strtolower($gekozenLetter);
+				//hoofdlettergevoeligheid toevoegen
+				if($hoofdlettergevoelig != "on"){	
+					$woord = strtolower($woord);
+					$gekozenLetter = strtolower($gekozenLetter);
+				}
 				$aantalkeerVoorgekomen = substr_count($woord, $gekozenLetter);
 				$output = "<p>De letter $gekozenLetter komt $aantalkeerVoorgekomen keer voor in het woord $woord.</p>\n";
 			}
@@ -87,6 +92,10 @@ font-size: 1.3em;
   <tr>
     <td>in woord</td>
     <td><input name="txtWoord" type="text" id="txtWoord" maxlength="30" value="<?php echo $woord; ?>"/></td>
+  </tr>
+  <tr>
+	<td>Hoofdlettergevoelig</td>
+	<td><input type="checkbox" name="chkHoofdlettergevoelig" id="chkHoofdlettergevoelig" /></td>
   </tr>
   <tr>
     <td>&nbsp;</td>
