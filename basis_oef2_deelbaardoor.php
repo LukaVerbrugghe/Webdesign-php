@@ -1,3 +1,17 @@
+<?php
+	//getal uit de textbox halen
+	$gekozenGetal = $_POST['txtGetal'];
+
+	//alle delers van het getal vinden
+	//forloop
+	$delers = array();
+	for ($i = 1; $i <= $gekozenGetal; $i++) {
+		if ($gekozenGetal % $i == 0) {
+			$delers[] = $i;
+		}
+	}
+	
+	?>
 <!doctype html>
 <html>
 <head>
@@ -48,12 +62,16 @@ font-size: 1.3em;
 	<header><img src="images/banner.jpg" width="100%"  alt=""/></header>
 	<main>
     <form action="" method="post">
-<p><input name="txtGetal" type="text" size="2" /> is deelbaar door... 
+<p><input name="txtGetal" type="number" size="2" /> is deelbaar door... 
 </p>
 <p><input type="submit" name="btnResultaat" value="Toon resultaat" /></p>
 </form>
-    
-    
+    <!-- Alle delers toevoegen -->
+    <?php
+	foreach ($delers as $deelbaarDoor) {
+		echo "<p>$gekozenGetal is deelbaar door $deelbaarDoor</p>";
+	}
+	?>
     </main>
 	<footer>&nbsp;</footer>
 </div>
