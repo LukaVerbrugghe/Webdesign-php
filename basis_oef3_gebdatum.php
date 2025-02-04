@@ -1,3 +1,21 @@
+<?php
+  //php code
+  $maanden = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"];
+
+  $naam = $_POST['txtNaam'];
+  $geboortedag = $_POST['dagDropdown'];
+  $geboortemaand = $_POST['maandDropdown'];
+  $geboortejaar = $_POST['jaarDropdown'];
+
+
+  $maandNummer = array_search($geboortemaand, $maanden) + 1;
+  if($geboortedag<10){
+    $geboortedagTweeNummers = "0".$geboortedag;
+  }
+  if($maandNummer<10){
+    $maandNummer = "0".$maandNummer;
+  }
+?>
 <!doctype html>
 <html>
 <head>
@@ -62,9 +80,34 @@ font-size: 1.3em;
     <td>Jaar</td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>
+      <!-- Dag -->
+       <select name="dagDropdown">
+        <?php
+        for($i = 1; $i<=31; $i++){
+          echo "<option>$i</option>";
+        }
+        ?>
+       </select>
+    </td>
+    <td>
+      <select name="maandDropdown">
+        <?php
+          foreach ($maanden as $maand) {
+              echo "<option>$maand</option>";
+          }
+        ?>
+      </select>
+    </td>
+    <td>
+      <select name="jaarDropdown">
+        <?php
+          for($i = 1950; $i<=2025; $i++){
+            echo "<option>$i</option>";
+          }
+        ?>
+      </select>
+    </td>
   </tr>
 </table>
 </td>
@@ -78,6 +121,11 @@ font-size: 1.3em;
 
 
 </form>
+
+<?php
+  echo "<p>$naam is geboren op $geboortedag $geboortemaand $geboortejaar.</p>";
+  echo "<p>Notatie NBN: $geboortejaar-$maandNummer-$geboortedagTweeNummers</p>"
+?>
     
     </main>
 	<footer>&nbsp;</footer>
