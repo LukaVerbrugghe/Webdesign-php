@@ -1,7 +1,10 @@
 <?php
-$leerlingen2=array("Lobke Bonte_6BI"=>"BonteLobke","Simon Declerck_6BI"=>"DeclerckSimon","Emma Devolder_6BI"=>"DevolderEmma","Alexander Dossche_6BI"=>"DosscheAlexander","Daan Hautekeete_6BI"=>"HautekeeteDaan","Aaron Injon_6BI"=>"InjonAaron","Pahul Malhi_6BI"=>"MalhiPahul","Tuur Mispelaere_6BI"=>"MispelaereTuur","Stan Tanghe_6BI"=>"TangheStan","Luka Verbrugghe_6BI"=>"VerbruggheLuka");
-$leerlingen=array("Milo Claessens Pillen_6AD"=>"ClaessensPillenMilo","Celestin De Marez_6AD"=>"DeMarezCelestin","Senna Devolder_6AD"=>"DevolderSenna","Gilles Longueville_6AD"=>"LonguevilleGilles","Hugo Popelier_6AD"=>"PopelierHugo","Joshua Radford_6AD"=>"RadfordJoshua","Arthur Roets_6AD"=>"RoetsArthur","Julian Stoops_6AD"=>"StoopsJulian","Maxim Van Belle_6AD"=>"VanBelleMaxim","Bouke Vandenbussche_6AD"=>"VandenbusscheBouke","Sem Van Eenoge_6AD"=>"VanEenogeSem");
-
+$leerlingen=array("Lobke Bonte_6BI"=>"BonteLobke","Simon Declerck_6BI"=>"DeclerckSimon","Emma Devolder_6BI"=>"DevolderEmma","Alexander Dossche_6BI"=>"DosscheAlexander","Daan Hautekeete_6BI"=>"HautekeeteDaan","Aaron Injon_6BI"=>"InjonAaron","Pahul Malhi_6BI"=>"MalhiPahul","Tuur Mispelaere_6BI"=>"MispelaereTuur","Stan Tanghe_6BI"=>"TangheStan","Luka Verbrugghe_6BI"=>"VerbruggheLuka","Milo Claessens Pillen_6AD"=>"ClaessensPillenMilo","Celestin De Marez_6AD"=>"DeMarezCelestin","Senna Devolder_6AD"=>"DevolderSenna","Gilles Longueville_6AD"=>"LonguevilleGilles","Hugo Popelier_6AD"=>"PopelierHugo","Joshua Radford_6AD"=>"RadfordJoshua","Arthur Roets_6AD"=>"RoetsArthur","Julian Stoops_6AD"=>"StoopsJulian","Maxim Van Belle_6AD"=>"VanBelleMaxim","Bouke Vandenbussche_6AD"=>"VandenbusscheBouke","Sem Van Eenoge_6AD"=>"VanEenogeSem");
+	foreach ($leerlingen as $key => $value) {
+		$output .= "<div class='persoon'>\n<img src='fotosSJZ/$value.JPG'>\n";
+		$naamZonderKlas = explode("_", $key);
+		$output .= "<div class='naam'>\n<p>$naamZonderKlas[0]</p>\n</div></div>\n\n\n'";
+	}
 ?>
 <!doctype html>
 <html>
@@ -31,14 +34,14 @@ width: 960px;
 	clear: both;
 	}
 	
-#persoon {
+.persoon {
 float: left;	
 margin: 0.5em;
 border: solid 1px #DD0B2F;
 text-align: center;
 width: 215px;
 }
-#naam {
+.naam {
 color: #FFF;
 background-color: #DD0B2F;	
 padding: 0.5em;
@@ -60,8 +63,15 @@ margin-bottom:2em;    }
 	<header><img src="images/banner.jpg" width='100%' alt=""/></header>
 <div id="content">
 <form name="frmKlas" method="post">
+<input type="radio" value="6BI" name="chbKlas">
+<label>6BI</label>
+<input type="radio" value="6AD" name="chbKlas">
+<label>6AD</label>
 <input type="submit" name="btnKlas" value="Kies klas">
 </form>    
+<?php
+echo $output;
+?>
 </div>
 <footer>&nbsp;</footer>
 </div>
