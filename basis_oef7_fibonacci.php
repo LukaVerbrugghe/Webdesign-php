@@ -1,3 +1,17 @@
+<?php
+	$getal1 = 0;
+	$getal2 = 1;
+	for ($i=1; $i <= 50; $i++) { 
+		$resultaat = $getal1 + $getal2;
+		$output .= "<td class='randen'>$resultaat</td>\n";
+		if($i%5 == 0){
+			$output .= "</tr><tr>";
+		}
+		$getal1 = $getal2;
+		$getal2 = $resultaat;
+	}
+?>
+
 <!doctype html>
 <html>
 <head>
@@ -41,7 +55,11 @@ padding-right: 0.2em;}
 <div id="wrapper">
 	<header><img src="images/banner.jpg" width="100%"  alt=""/></header>
 	<main>
-        <table>
+        <table><tr>
+			<?= $output; ?>
+			 <!--Is hetzelfde als <?php echo $output; ?>  -->
+			</tr>
+		</tr>
         </table>
     </main>
 	<footer>&nbsp;</footer>
