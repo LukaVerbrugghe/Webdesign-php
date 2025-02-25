@@ -1,9 +1,14 @@
 <?php
 $leerlingen=array("Lobke Bonte_6BI"=>"BonteLobke","Simon Declerck_6BI"=>"DeclerckSimon","Emma Devolder_6BI"=>"DevolderEmma","Alexander Dossche_6BI"=>"DosscheAlexander","Daan Hautekeete_6BI"=>"HautekeeteDaan","Aaron Injon_6BI"=>"InjonAaron","Pahul Malhi_6BI"=>"MalhiPahul","Tuur Mispelaere_6BI"=>"MispelaereTuur","Stan Tanghe_6BI"=>"TangheStan","Luka Verbrugghe_6BI"=>"VerbruggheLuka","Milo Claessens Pillen_6AD"=>"ClaessensPillenMilo","Celestin De Marez_6AD"=>"DeMarezCelestin","Senna Devolder_6AD"=>"DevolderSenna","Gilles Longueville_6AD"=>"LonguevilleGilles","Hugo Popelier_6AD"=>"PopelierHugo","Joshua Radford_6AD"=>"RadfordJoshua","Arthur Roets_6AD"=>"RoetsArthur","Julian Stoops_6AD"=>"StoopsJulian","Maxim Van Belle_6AD"=>"VanBelleMaxim","Bouke Vandenbussche_6AD"=>"VandenbusscheBouke","Sem Van Eenoge_6AD"=>"VanEenogeSem");
+$gekozenKlas = $_POST['chbKlas'];
+
 	foreach ($leerlingen as $key => $value) {
-		$output .= "<div class='persoon'>\n<img src='fotosSJZ/$value.JPG'>\n";
-		$naamZonderKlas = explode("_", $key);
-		$output .= "<div class='naam'>\n<p>$naamZonderKlas[0]</p>\n</div></div>\n\n\n";
+		$splitsing = explode("_", $key);
+		$test .= $splitsing[1];
+		if($splitsing[1] == $gekozenKlas){
+			$output .= "<div class='persoon'>\n<img src='fotosSJZ/$value.JPG'>\n";
+			$output .= "<div class='naam'>\n<p>$splitsing[0]</p>\n</div></div>\n\n\n";
+		}
 	}
 ?>
 <!doctype html>
