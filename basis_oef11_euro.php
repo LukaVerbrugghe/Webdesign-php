@@ -1,5 +1,22 @@
 <?php
-$biljetten =array("500","200","100","50","20","10","5","2","1","0.50","0.20","0.10","0.05","0.02","0.01");
+if(isset($_POST["btnResultaat"])){
+	$biljetten =array("500","200","100","50","20","10","5","2","1","0.50","0.20","0.10","0.05","0.02","0.01");
+	$bedrag = $_POST['txtGetal'];
+	$restbedrag = str_replace(",", ".", $bedrag);
+	$i = 0;
+	while ($restbedrag > 0) {
+		$biljet = $biljetten[$i];
+		if ($restbedrag >= $biljet){
+			$aantal = floor($restbedrag / $biljet);
+			for($teller = 1; $teller <= $aantal; $teller++){
+				$foto = str_replace(".", "", $biljet);
+				$output .= "<img src='images/$foto.jpg'>&nbsp;\n";
+			}
+			$restbedrag = round($restbedrag - $aantal * $biljet, 2);
+		}
+		$i++;
+	}
+}
 ?>
 <!doctype html>
 <html>
@@ -27,15 +44,16 @@ width: 1080px;
 	}
 </style>
 </head>
-
 <body>
 <div id="wrapper">
 	<header><img src="images/banner.jpg" width="100%"  alt=""/></header>
 	<main>
     <form action="" method="post">
-<p>€ <input name="txtGetal" type="text"  /> <input type="submit" name="btnResultaat" value="Biljetten en munten" />
+<p>€ <input value="<?php echo $bedrag?>" name="txtGetal" type="number" min="0.01" max="5000" step="0.01" required/> <input type="submit" name="btnResultaat" value="Biljetten en munten" />
 </form>
-    
+    <?php
+		echo $output;
+	?>
     </main>
 	<footer>&nbsp;</footer>
 </div>
