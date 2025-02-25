@@ -3,7 +3,7 @@ $leerlingen=array("Lobke Bonte_6BI"=>"BonteLobke","Simon Declerck_6BI"=>"Declerc
 	foreach ($leerlingen as $key => $value) {
 		$output .= "<div class='persoon'>\n<img src='fotosSJZ/$value.JPG'>\n";
 		$naamZonderKlas = explode("_", $key);
-		$output .= "<div class='naam'>\n<p>$naamZonderKlas[0]</p>\n</div></div>\n\n\n'";
+		$output .= "<div class='naam'>\n<p>$naamZonderKlas[0]</p>\n</div></div>\n\n\n";
 	}
 ?>
 <!doctype html>
