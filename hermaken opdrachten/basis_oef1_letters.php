@@ -1,3 +1,19 @@
+<?php
+	//gegevens inladen
+	if (isset($_POST["btnResultaat"])) {
+		$letter = $_POST["txtLetter"];
+		$woord = $_POST["txtWoord"];
+		$aantalLetters = substr_count($woord,$letter);
+		$output = "";
+		if($aantalLetters != 0){
+			$output .= "De letter <strong>$letter</strong> komt <strong>$aantalLetters</strong> keer voor in het woord <strong>$woord</strong>.";
+		}
+		else{
+			$output .= "De letter <strong>$letter</strong> komt niet voor in het woord <strong>$woord</strong>.";
+		}
+	}
+?>
+
 <!doctype html>
 <html>
 <head>
@@ -65,6 +81,13 @@ font-size: 1.3em;
   </tr>
 </table>
 </form>
+<p>
+<?php
+	if(isset($_POST["btnResultaat"])){
+		echo $output;
+	}
+?>
+</p>
     </main>
 	<footer>&nbsp;</footer>
 </div>
