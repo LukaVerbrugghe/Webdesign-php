@@ -8,7 +8,7 @@
 	color: #0A0A55;		
 	}
 	#wrapper {
-width: 1080px;
+	width: 1080px;
 	margin-left: auto;
 	margin-right: auto;
 	border: solid 1px #0070C0;
@@ -23,12 +23,12 @@ width: 1080px;
 	background-color: #0070C0;
 	}
     form {
-border: solid 1px #660066;
-background-color: #3CF;	
-font-family: Verdana, Geneva, sans-serif;
-font-size: 1.2em;
-margin-bottom: 2em;
-width: 100%;
+	border: solid 1px #660066;
+	background-color: #3CF;	
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 1.2em;
+	margin-bottom: 2em;
+	width: 100%;
 }
 form input {
 color: #C00;	
