@@ -1,3 +1,19 @@
+<?php
+	if(isset($_POST["btnResultaat"])){
+		$getal = $_POST["txtGetal"];
+		$deelbaarDoor = [];
+		for ($i=1; $i <= $getal; $i++) { 
+			if($getal % $i == 0){
+				array_push($deelbaarDoor, $i);
+			}
+		}
+		$output = "<p>Het getal <strong>$getal</strong> is deelbaar door ";
+		foreach ($deelbaarDoor as $value) {
+			$output .= "<strong>$value</strong>, ";
+		}
+		$output .= "</p>";
+	}
+?>
 <!doctype html>
 <html>
 <head>
@@ -48,11 +64,13 @@ font-size: 1.3em;
 	<header><img src="images/banner.jpg" width="100%"  alt=""/></header>
 	<main>
     <form action="" method="post">
-<p><input name="txtGetal" type="text" size="2" /> is deelbaar door... 
+<p><input name="txtGetal" type="number" size="2" value="<?php echo $getal ?>"/> is deelbaar door... 
 </p>
 <p><input type="submit" name="btnResultaat" value="Toon resultaat" /></p>
 </form>
-    
+    <?php
+		echo $output;
+	?>
     
     </main>
 	<footer>&nbsp;</footer>
