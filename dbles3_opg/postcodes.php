@@ -22,7 +22,7 @@
             $j++;
         }
         else{
-            $output .= "<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>\n";
+            $output .= "<tr><td>&nbsp</td><td>&nbsp</td><td>&nbsp</td><td>&nbsp</td></tr>\n";
             $j++;
         }
     }
