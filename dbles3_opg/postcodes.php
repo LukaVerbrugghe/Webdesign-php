@@ -4,11 +4,27 @@
     $sql = "SELECT postcode, gemeente, deelgemeente FROM tblpostcodes ORDER BY gemeente";
     // dataset
     $result = $db->query($sql) or die("ophalen data mislukt!");
+    $i = 1;
+    $j = 1;
     while($row = $result->fetch_assoc()){
         $postcode = $row["postcode"];
         $gemeente = $row["gemeente"];
         $deelgemeente = $row["deelgemeente"];
-        $output .= "<tr><td>$postcode</td><td>$gemeente</td><td>$deelgemeente</td></tr>\n";
+        if($j % 11 != 0){
+
+            if($postcode < 9000 && $postcode >= 8000){
+                $output .= "<tr class='WVL'><td>$i</td><td>$postcode</td><td>$gemeente</td><td>$deelgemeente</td></tr>\n";
+            }
+            else{
+                $output .= "<tr><td>$i</td><td>$postcode</td><td>$gemeente</td><td>$deelgemeente</td></tr>\n";
+            }   
+            $i++;
+            $j++;
+        }
+        else{
+            $output .= "<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>\n";
+            $j++;
+        }
     }
 ?>
 
@@ -21,6 +37,10 @@
 	body {
 	color: #0A0A55;		
 	}
+    .WVL{
+        color: red;
+        font-weight: bold;
+    }
 	#wrapper {
 width: 1080px;
 	margin-left: auto;
@@ -71,7 +91,7 @@ text-align: right;
     <td></td>
 </form>
     <table>
-        <tr><td>Postcode</td><td>Gemeente</td><td>Deelgemeente</td></tr>
+        <tr><td>Nummer</td><td>Postcode</td><td>Gemeente</td><td>Deelgemeente</td></tr>
         <?= $output;?>
     </table>
     </main>
