@@ -1,5 +1,13 @@
 <?php
     include("cnndbles3.php");
+    $sqlProvincies = "SELECT provincie FROM tblpostcodes GROUP BY provincie";
+    $resultProvincies = $db->query($sqlProvincies) or die("ophalen data mislukt!");
+    while($row = $resultProvincies->fetch_assoc()){
+        $provincie = $row["provincie"];
+        $options .= "<option value='$provincie'>$provincie</option>\n";
+    }
+
+
     // we maken een lijstje met de postcodes, gemeentes en deelgemeentes
     $sql = "SELECT postcode, gemeente, deelgemeente FROM tblpostcodes ORDER BY gemeente";
     // dataset
@@ -81,9 +89,7 @@ text-align: right;
 <tr><td>Leeftijd</td><td><input name="txtLeeftijd" type="number"  /></td></tr>
 <tr><td>Keuze</td><td>
 <select name="cboKeuze">
-<option value="1">Keuze 1</option>    
-<option value="2">Keuze 2</option>    
-<option value="3">Keuze 3</option>        
+<?= $options?>      
 </select>
     </td></tr>    
 <tr><td>&nbsp;</td><td><input type="submit" name="btnVersturen" value="Verstuur" /></td></tr>    
