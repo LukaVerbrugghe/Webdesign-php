@@ -8,7 +8,7 @@
 	color: #0A0A55;		
 	}
 	#wrapper {
-width: 1080px;
+	width: 1080px;
 	margin-left: auto;
 	margin-right: auto;
 	border: solid 1px #0070C0;
@@ -23,17 +23,17 @@ width: 1080px;
 	background-color: #0070C0;
 	}
     form {border: #003366 1px solid;
-background-color: #CCCCCC;
-width: 100%;
-padding: 5px;}
-.binnentabel {
-background-color: #FFFF99;
-padding: 5px;
-}
-	.prijs {
-text-align: right;
-	padding-right: 12em;
-    }
+	background-color: #CCCCCC;
+	width: 100%;
+	padding: 5px;}
+	.binnentabel {
+	background-color: #FFFF99;
+	padding: 5px;
+	}
+		.prijs {
+	text-align: right;
+		padding-right: 12em;
+		}
 </style>
 </head>
 
