@@ -13,7 +13,7 @@ include("cnndbles3.php");
     font-size: 1.2em;
 	}
 	#wrapper {
-width: 1180px;
+  width: 1180px;
 	margin-left: auto;
 	margin-right: auto;
 	border: solid 1px #0070C0;
@@ -30,23 +30,23 @@ width: 1180px;
     .rand,select,  { border: solid 1px #990000;}
     select {font-size: 1.3em;}
     #scores td  { border: solid 1px #990000;
-padding: 2px;
-margin: 5px;
-}
-.pos {text-align: center;
-font-size: 20pt;
-font-weight:600;
-}
-.neg {text-align: center;
-font-size: 20pt;
-font-weight:600;
-color: #FFFFFF;
-background-color: #FF0000;
-}
-.ruimte {
-height: 3px;
-background-color: #FFFFFF;
-}
+  padding: 2px;
+  margin: 5px;
+  }
+  .pos {text-align: center;
+  font-size: 20pt;
+  font-weight:600;
+  }
+  .neg {text-align: center;
+  font-size: 20pt;
+  font-weight:600;
+  color: #FFFFFF;
+  background-color: #FF0000;
+  }
+  .ruimte {
+  height: 3px;
+  background-color: #FFFFFF;
+  }
 </style>
 </head>
 
