@@ -1,5 +1,52 @@
 <?php
 include("cnndbles3.php");
+// punten ophalen
+// wrm boven keuzelijst? --> id van gekozen kandidaat nodig om te weten welke kandidaat in de keuzelijst behouden moet blijven
+// niet wnr we de pagina voor de eerste keer laden
+if (isset($_POST['cboKandidaat'])){
+  $bonus = 0;
+  $tekort = 0;
+  $gekozenland = $_POST['cboKandidaat'];
+  
+  $sql = "SELECT * FROM tblrazresults WHERE exkand=$gekozenland";
+  $result = $db->query($sql);
+  $row = $result->fetch_assoc();
+
+  for ($i=1; $i < 8; $i++) { 
+    // valt niet zo veel over te zeggen volgens meneer (de lus he)
+    // h1 h2 h3 h4 h5 h6 h7, maar 'efficient'
+    ${h$i} = $row['h'.$i];
+
+    // tekortpunten berekenen
+    if(${'h'.$i}<50){
+      $minpunten+= (50 - ${'h'.$i});
+    }
+    $totaal += ${'h'.$i};
+  }
+  $score = $totaal/7;
+
+  if($score>=50){
+    $bonus = floor($score/10);
+  }
+  if($minpunten>$bonus){
+    $resultaat = "niet geslaagd";
+  }
+  else{
+    $resultaat = "geslaagd"
+  }
+}
+
+
+// invullen van de keuzelijst
+$sqlcombo = "SELECT * FROM tblrazkandidaten ORDER BY fnaam,voornaam";
+$resultcombo = $db->query($sqlcombo);
+while($rowcombo = $resultcombo->fetch_assoc()){
+  $id = $rowcombo['idkand'];
+  $vnaam = $rowcombo['voornaam'];
+  $fnaam = $rowcombo['fnaam'];
+
+  $combo .="<option value='$id'>$fnaam $vnaam</option>\n";
+}
 ?>
 <!doctype html>
 <html>
@@ -57,7 +104,9 @@ include("cnndbles3.php");
     <table width= "80%" border="0" align="center" cellpadding="0" cellspacing="0" class="rand">
   <tr>
     <td><form id="form1" name="frmNaamlijst" method="post" action="">
-  Kies een examenkandidaat: KEUZELIJST
+  <select name="cboKandidaat" onchange="document.frmNaamLijst.submit()">
+    <option value='0'>Kies een kandidaat</option>
+    <?= $combo;?>
 </form></td>
   </tr>
   
