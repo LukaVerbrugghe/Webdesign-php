@@ -1,6 +1,25 @@
 <?php
 include("cnnfietsgraveer.php");
 include("algemeen.php");
+
+//registratie en bevestiging
+
+// Ophalen van de verschillende graveerplaatsen
+$sqlgraveerplaatsen = "SELECT graveerID,gemeente FROM tblplaatsen ORDER BY gemeente";
+$resultgraveerplaatsen = $db->query($sqlgraveerplaatsen);
+$graveerplaatsenoutput = "";
+
+$teller = 1;
+while($rowgraveerplaatsen = $resultgraveerplaatsen->fetch_assoc()){
+  $graveerID = $rowgraveerplaatsen['graveerID'];
+  $gemeente = $rowgraveerplaatsen['gemeente'];
+  $graveerplaatsenoutput .= "<td><input type='radio' name='$graveerID'>$gemeente</td>\n";
+  if($teller%5==0){
+    $graveerplaatsenoutput .= "</tr>\n<tr>";
+  }
+  $teller++;
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,9 +65,11 @@ include("algemeen.php");
   <fieldset><legend>Kies je graveerplaats</legend>
   <table width="800" border="0" cellspacing="0" cellpadding="0"> 
   <tr>
-HIER KOMEN DE PLAATSEN WAARUIT JE KUNT KIEZEN!
-  
-  
+    <!-- Hier komen de graveerplaatsen -->
+
+       <?php
+      echo $graveerplaatsenoutput;
+      ?>
   </tr>
   </table>
   </fieldset>
