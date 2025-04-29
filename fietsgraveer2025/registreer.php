@@ -3,6 +3,59 @@ include("cnnfietsgraveer.php");
 include("algemeen.php");
 
 //registratie en bevestiging
+if(isset($_POST['btnRegistreer'])){
+  // data uit het forumulier ophalen
+  $fnaam = addslashes($_POST['txtFamilienaam']); //de functie addslashes zorgt ervoor dat bv d'hont geen errors geeft
+  $vnaam = addslashes($_POST['txtVoornaam']);
+  $telefoon = $_POST['txtTelefoon'];
+  $email = $_POST['txtEmail'];
+  $gekozenplaats = $_POST['optPlaats']; //nog vragen
+  $ipadres = $_SERVER['REMOTE_ADDR']; //dit wordt gebruikt om het ip adres op te halen
+
+  // wachtwoord genereren
+  $wwtekens = array(
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '[', ']', '|', '\\', ':', ';', '"', "'", '<', '>', ',', '.', '?', '/', '~', '`'
+); //deze lijst bevat geen o, want dat lijkt op een 0 (eigenlijk moeten de cijfers en hoofdletters hier ook bij, maar dat is nogal veel werk)
+  $getal = $wwtekens[mt_rand(0,10)];
+
+  // !!! Wachtwoord genereren is nog niet klaar !!!
+
+  // gegevens toevoegen aan databaank
+  $sql = "INSERT INTO tblregistratie (fnaam,voornaam,telefoon,email,plaats,ipadres) VALUES ('$fnaam','$vnaam','$telefoon','$email',$gekozenplaats,'$ipadres')";
+
+  $db->query($sql);
+
+
+  // bevestiging registratie
+  $bevestinging = "De volgende gegevnes werden geregistreerd:<br>";
+  $bevestinging .= "Naam: <strong>$vnaam $fnaam</strong>";
+  $bevestinging .= "Telefoon: <strong>$telefoon</strong>";
+  $bevestinging .= "Email: <strong>$email</strong>";
+
+  $sqlgekozenplaats = "SELECT * FROM tblplaatsen WHERE graveerID=$gekozenplaats"; //we zitten $gekozenplaats niet tussen quotes omdat het veld numeriek is
+  $resultgekozenplaats = $db->query($sqlgekozenplaats);
+  
+  $rowgekozenplaats = $resultgekozenplaats->fetch_assoc();
+  $gekozengemeente = $rowgekozenplaats['gemeente'];
+  $gekozenlocatie = $rowgekozenplaats['locatie'];
+  $gekozenadres = $rowgekozenplaats['adres'];
+  $bevestinging .= "Locatie: <strong>$locatie $gekozengemeente: $gekozenadres</strong>";
+
+  $nederlandseMaanden = [
+    1 => 'januari',
+    2 => 'februari',
+    3 => 'maart',
+    4 => 'april',
+    5 => 'mei',
+    6 => 'juni',
+    7 => 'juli',
+    8 => 'augustus',
+    9 => 'september',
+    10 => 'oktober',
+    11 => 'november',
+    12 => 'december'
+];
+}
 
 // Ophalen van de verschillende graveerplaatsen
 $sqlgraveerplaatsen = "SELECT graveerID,gemeente FROM tblplaatsen ORDER BY gemeente";
@@ -13,7 +66,7 @@ $teller = 1;
 while($rowgraveerplaatsen = $resultgraveerplaatsen->fetch_assoc()){
   $graveerID = $rowgraveerplaatsen['graveerID'];
   $gemeente = $rowgraveerplaatsen['gemeente'];
-  $graveerplaatsenoutput .= "<td><input type='radio' name='$graveerID'>$gemeente</td>\n";
+  $graveerplaatsenoutput .= "<td><input type='radio' name='optPlaats' value='$graveerID'>$gemeente</td>\n";
   if($teller%5==0){
     $graveerplaatsenoutput .= "</tr>\n<tr>";
   }
