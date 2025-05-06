@@ -1,7 +1,57 @@
 <?php
 include("cnnfietsgraveer.php");
 include("algemeen.php");
-?>
+$plaatsen = ""; //is eigenlijk niet nodig maar anders krijg je een waarschuwing
+// Lijst plaatsen aan de linkerkant van de pagina
+$qryplaatsen = $db->query("SELECT * FROM tblplaatsen ORDER BY gemeente");
+while($rowplaatsen = $qryplaatsen->fetch_assoc()){
+  $gemeente = $rowplaatsen['gemeente'];
+  $locatie = $rowplaatsen['locatie'];
+  $id = $rowplaatsen['graveerID'];
+
+  $plaatsen .= "<tr><td>$gemeente</td><td>$locatie</td><td><a href=?id=$id><img src='images/picto_detail.jpg'></a></td></tr>\n"; #let eens op de parameter die wordt meegegeven
+}
+
+
+// detailinfo ophalen
+if(!empty($_GET['id'])){
+  $gekozenid = $_GET['id'];
+
+  $qrydetailplaatsen = $db->query("SELECT * FROM tblplaatsen WHERE graveerID=$gekozenid");
+  $rowdetailplaatsen = $qrydetailplaatsen->fetch_assoc();
+
+  $gemeente = $rowdetailplaatsen['gemeente'];
+  $locatie = $rowdetailplaatsen['locatie'];
+  $adres = $rowdetailplaatsen['adres'];
+  $datum = $rowdetailplaatsen['datum'];
+  $uur = $rowdetailplaatsen['uur'];
+
+  $details = "<p><strong>Detailinfo $gemeente</strong></p>
+	<table class='table'>
+  <tr >
+  <td width ='100' class='onderrand'>Gemeente</td>
+  <td width ='200' class='onderrand'>$gemeente</td>
+  </tr>
+  <tr>
+  <td class='onderrand'>Locatie</td>
+    <td class='onderrand'>$locatie</td>
+    </tr>
+    <tr>
+    <td class='onderrand'>Adres</td>
+    <td class='onderrand'>$adres</td>
+    </tr>
+  <tr>
+  <td class='onderrand'>Datum</td>
+  <td class='onderrand'>$datum</td>
+  </tr>
+  <tr>
+  <td class='onderrand'>Uur</td>
+  <td class='onderrand'>$uur</td>
+  </tr>
+  </table>";
+}
+  
+  ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,33 +81,16 @@ include("algemeen.php");
 <div class="col-md-5">
 <table class='table'>
 <tr class='onpaar'><td><strong>Gemeente</strong></td><td><strong>Locatie</strong></td><td>&nbsp;</td></tr>
+<?php
+  echo $plaatsen;
+?>
 </table>
 </div>	
 <div class="col-md-4">
 
-<p><strong>Detailinfo XXX</strong></p>
-	<table class='table'>
-  <tr >
-    <td width ='100' class="onderrand">Gemeente</td>
-    <td width ='200' class="onderrand">XXX</td>
-  </tr>
-  <tr>
-    <td class="onderrand">Locatie</td>
-    <td class="onderrand">XXX</td>
-  </tr>
-  <tr>
-    <td class="onderrand">Adres</td>
-    <td class="onderrand">XXX</td>
-  </tr>
-  <tr>
-    <td class="onderrand">Datum</td>
-    <td class="onderrand">XXX</td>
-  </tr>
-  <tr>
-    <td class="onderrand">Uur</td>
-    <td class="onderrand">XXX</td>
-  </tr>
-</table>
+<?php
+  echo $details;
+?>
 
            </div>
            <div class="col-md-3">
