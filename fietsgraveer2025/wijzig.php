@@ -1,6 +1,55 @@
 <?php
 include("cnnfietsgraveer.php");
 include("algemeen.php");
+
+// wijzigingen toepassen in db
+if(isset($_POST['btnWijzig'])){
+  $id = $_POST['cboPersoon'];
+  $fnaam = $_POST['txtFamilienaam'];
+  $vnaam = $_POST['txtVoornaam'];
+  $telefoon = $_POST['txtTelefoon'];
+  $email = $_POST['txtEmail'];
+  $ipadres = $_SERVER['REMOTE_ADDR'];
+  $tijdreg = date("Y-m-d");
+
+  $db->query("UPDATE tblregistratie SET fnaam='$fnaam',voornaam='$vnaam',telefoon='$telefoon',email='$email',ipadres='$ipadres',tijdreg='$tijdreg' WHERE registratieID=$id");
+  $bericht = "$vnaam $fnaam gegevens gewijzigd op $tijdreg via $ipadres.";
+}
+
+// ophalen van gekozen gegevens
+if(isset($_POST['cboPersoon'])){
+  $gekozenID = $_POST['cboPersoon'];
+
+  $qryoptehalengegevens = $db->query("SELECT fnaam,voornaam,telefoon,email FROM tblregistratie WHERE registratieID=$gekozenID");
+
+  $arpersoon = $qryoptehalengegevens->fetch_assoc();
+}
+
+// keuzelijst personen
+$qrykeuzelijstpersonen = $db->query("SELECT fnaam,voornaam,registratieID FROM tblregistratie ORDER BY fnaam,voornaam");
+
+while($rowkeuzelijstpersonen=$qrykeuzelijstpersonen->fetch_assoc()){
+  $fnaam = $rowkeuzelijstpersonen['fnaam'];
+  $vnaam = $rowkeuzelijstpersonen['voornaam'];
+  $ID = $rowkeuzelijstpersonen['registratieID'];
+
+  
+  $combopersonen .= "<option value='$ID'";
+  if($ID == $gekozenID && isset($_POST['cboPersoon'])){
+    $combopersonen .= " selected";
+  }
+  $combopersonen .= ">$fnaam $vnaam</option>\n";
+}
+
+// keuzelijst graveerplaatsen
+$qrygraveerplaatsen = $db->query("SELECT graveerID,gemeente FROM tblplaatsen ORDER BY gemeente");
+while($rowgraveerplaatsen=$qrygraveerplaatsen->fetch_assoc()){
+  $ID = $rowgraveerplaatsen['graveerID'];
+  $gemeente = $rowgraveerplaatsen['gemeente'];
+  
+  $combograveerplaatsen .= "<option value='$ID'";
+  $combograveerplaatsen .= ">$gemeente</option>\n";
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,10 +78,12 @@ include("algemeen.php");
   <p>Kies een persoon: 
     <select name="cboPersoon" onchange="document.frmPersoon.submit()">
       <option value="0">Maak je keuze!</option>
-   
+   <?= $combopersonen; ?>
       </select>
   </p>
- 
+ <?php
+ if(isset($_POST['cboPersoon'])){
+?>
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td>&nbsp;</td>
@@ -40,24 +91,27 @@ include("algemeen.php");
     </tr>
     <tr>
       <td width="120">Familienaam</td>
-      <td><input name="txtFamilienaam" type="text" id="txtFamilienaam"/></td>
+      <td><input name="txtFamilienaam" type="text" id="txtFamilienaam" value="<?= $arpersoon['fnaam'];?>"/></td>
     </tr>
     <tr>
       <td>Voornaam</td>
-      <td><input name="txtVoornaam" type="text" id="txtVoornaam"/></td>
+      <td><input name="txtVoornaam" type="text" id="txtVoornaam" value="<?= $arpersoon['voornaam'];?>"/></td>
     </tr>
     <tr>
       <td>Telefoon</td>
-      <td><input name="txtTelefoon" type="text" id="txtTelefoon"/></td>
+      <td><input name="txtTelefoon" type="text" id="txtTelefoon" value="<?= $arpersoon['telefoon'];?>"/></td>
     </tr>
     <tr>
       <td>Email</td>
-      <td><input name="txtEmail" type="text" id="txtEmail" size="40"/></td>
+      <td><input name="txtEmail" type="text" id="txtEmail" size="40" value="<?= $arpersoon['email'];?>"/></td>
     </tr>
     <tr>
       <td>Plaats</td>
       <td>
-     KEUZELIJST PLAATSEN
+        <select name="cboPlaats" id="cboPlaats">
+          <option value="0">Maak je keuze!</option>
+          <?= $combograveerplaatsen; ?>
+        </select>
 </td>
     </tr>
     <tr>
@@ -72,11 +126,11 @@ include("algemeen.php");
     </tr>
     
     <tr>
-      <td colspan="2">HIER KOMT BERICHT DAT WIJZIGINGEN BEVESTIGT</td>
+      <td colspan="2"><?= $bericht; ?></td>
       
     </tr>
   </table>
-
+<?php } ?>
 </form>
            </div>
            <div class="col-md-3">
