@@ -1,6 +1,18 @@
 <?php 
 include("cnnFietsgraveer.php");
 include("algemeen.php");
+
+$qryoverzicht = $db->query("SELECT * FROM tblregistratie INNER JOIN tblplaatsen ON tblregistratie.plaats = tblplaatsen.graveerID ORDER BY fnaam,voornaam");
+
+while($rowoverzicht=$qryoverzicht->fetch_assoc()){
+    $fnaam = $rowoverzicht['fnaam'];
+    $vnaam = $rowoverzicht['voornaam'];
+    $gemeente = $rowoverzicht['gemeente'];
+    $locatie = $rowoverzicht['locatie'];
+
+    $lijst .= "<tr class='onpaar'><td>$fnaam</td><td>$vnaam</td><td>$gemeente</td><td>$locatie</td></tr>";
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,7 +38,8 @@ include("algemeen.php");
    	   <h1>Overzicht fietsgraveeractie voorjaar 2025</h1>
 <p>U kunt op &eacute;&eacute;n van volgende locaties terecht voor het graveren van je fiets. Vergeet je niet op voorhand in te schrijven. Kies daarvoor het menu <strong>Registreer</strong>.</p> 
 <table id ="prodlijst" class="table">	
-<tr class='onpaar'><td><strong>Gemeente</strong></td><td><strong>Locatie</strong></td><td><strong>Adres</strong></td><td><strong>Datum</strong></td><td><strong>Uur</strong></td></tr>
+<tr class='onpaar'><td><strong>Naam</strong></td><td><strong>Voornaam</strong></td><td><strong>Plaats</strong></td><td><strong>Locatie</strong></td></tr>
+<?= $lijst;?>
 </table>
            </div>
            <div class="col-md-3">
