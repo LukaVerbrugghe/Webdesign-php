@@ -2,6 +2,42 @@
 include("cnnConnection.php");
 include("algemeen.php");
 $tekens = array ("2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","J","K","L","M","N","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","j","k","l","m","n","p","q","r","s","t","u","v","w","x","y","z");
+$error = "";
+//registeren
+if(isset($_POST['btnRegistreer'])){
+  //de gebruiker heeft het formulier verzonden
+  $fnaam = addslashes($_POST['txtFamilienaam']);
+  $vnaam = addslashes($_POST['txtVoornaam']);
+  $geboortedatum = $_POST['txtGeboortedatum'];
+  $email = $_POST['txtEmail'];
+  $bevestigingEmail = $_POST['txtEmail2'];
+  $geslacht = $_POST['optGeslacht'];
+
+  //alle velden zijn sowieso ingevuld door html
+  //checken of de 2 emailadressen hetzelfde zijn
+  if($email == $bevestigingEmail){
+    //de 2 emailadressen zijn hetzelfde --> verder gaan
+    //checken of de klant al geregistreerd is
+    $sqlklantemailchecken = "SELECT Voornaam, Familienaam FROM tblklanten WHERE Email = '$email'";
+    $qryklantenemailchecken = $db->query($sqlklantemailchecken);
+    if(isset($qryklantenemailchecken)){
+      //het account bestaat al
+      $rowklanten = $qryklantenemailchecken->fetch_assoc();
+      $vnaam = $rowklanten['Voornaam'];
+      $fnaam = $rowklanten['Familienaam'];
+      $error = "E-mailadres is reeds in gebruik door $vnaam $fnaam.";
+    }
+    else{
+      //email wordt nog niet gebruikt, de gebruiker kan verder gaan
+      
+    }
+  }
+  else{
+    //de emailadressen zijn niet hetzelfde, afbreken + error
+    $error = "Geef 2 gelijke e-mailadressen in!!!";
+    echo "<p>LUka zoek dit</p>";
+  }
+}
 ?>
 <!doctype html>
 <html>
@@ -78,7 +114,10 @@ $tekens = array ("2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H"
       </tbody>
     </table>
   </form>
-  <div id="message1">BERICHT</div>
+  <div id="message1">
+    <?php echo $error; 
+    ?>
+  </div>
   </div>
 	
 	</div>
