@@ -1,6 +1,26 @@
 <?php
 include("cnnConnectie.php");
 include("algemeen.php");
+//keuzelijst
+$catsql = "SELECT * FROM tblcategorie ORDER BY catomschrijving";
+$qrycat = $db->query($catsql);
+while($rowcat = $qrycat->fetch_assoc()){
+    $id = $rowcat['catID'];
+    $omschrijving = $rowcat['catomschrijving'];
+    $catkeuzeoutput .= "<option value='$id'>$omschrijving</option>\n";
+}
+
+//inladen van gekozen items
+if(isset($_POST['cboCategorie'])){
+    $gekozenID = $_POST['cboCategorie'];
+    $sqlgekozenCat = "SELECT * FROM tblproducten WHERE productgroep = '$gekozenID'";
+    $qrygekozencat = $db->query($sqlgekozenCat);
+    while($rowgekozencat = $qrygekozencat->fetch_assoc()){
+        $artnr = $rowgekozencat['artnr'];
+        $product = $rowgekozencat['product'];
+        $gekozenCatOutput .= "<tr><td><img src='images/picto_info1.jpg'></td><td>$product</td></tr>\n";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,12 +47,13 @@ include("algemeen.php");
    	   <form name="frmCategorie" method="post">
    	   <p><select name="cboCategorie">
    	   <option value="0">Kies een categorie</option>
+       <?= $catkeuzeoutput; ?>
        </select>
        </p>
        </form>
            
 <table id ="prodlijst" class='table table-hover' >	   
-<tr><td><img src='images/picto_info1.jpg'></td><td></td></tr>
+<?= $gekozenCatOutput; ?>
 </table>
    
 		   </div>
