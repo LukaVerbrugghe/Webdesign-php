@@ -1,6 +1,18 @@
 <?php 
 include("cnnConnectie.php");
 include("algemeen.php");
+
+//weetjes
+$sqlweetjes = "SELECT * FROM tblfestivals";
+$qryweetjes = $db->query($sqlweetjes);
+$taal = $_SESSION['taal'];
+
+while($rowweetjes = $qryweetjes->fetch_assoc()){
+    $weetje = $rowweetjes['fact'.$taal];
+    $id = $rowweetjes['id'.$taal];
+    $output .= "<div id='fact'><img src='images/$id.jpg' class='img-fluid'><p>$weetje</p></div>";
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,7 +37,7 @@ include("algemeen.php");
    	   <div class="col-md-8">
    	   <h1>Festivals - facts & figures</h1>
 
-<div id='fact'><img src='images/foto.jpg' class='img-fluid'><p>tekst fact</p></div>
+<?= $output; ?>
 
 <div id='clearing'></div>
 		   </div>

@@ -1,3 +1,15 @@
+<?php
+if($_SESSION['taal']=="nl"){
+  $navoutput = "<option value='0'>Kies je taal</option>\n<option value='nl' selected>Nederlands</option>\n<option value='fr'>Frans</option>\n";
+}
+elseif($_SESSION['taal'] =="fr"){
+  $navoutput = "<option value='0'>Kies je taal</option>\n<option value='nl'>Nederlands</option>\n<option value='fr' selected>Frans</option>\n";
+}
+else{
+  $navoutput = "<option value='0'>Kies je taal</option>\n<option value='nl'>Nederlands</option>\n<option value='fr'>Frans</option>\n";
+
+}
+?>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">Greenway - Meet the new meat! ***   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#hoofdmenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,9 +27,9 @@
 <div id='rechts'>
 <form name='frmTaal' method='post'>
 <select name='cboTaal' onchange='document.frmTaal.submit()'>
-<option value='0'>Kies je taal</option>
-<option value='nl'>Nederlands</option>
-<option value='fr'>Frans</option>
+<?php
+echo $navoutput;
+?>
 </select>
 </form>
   </div>
