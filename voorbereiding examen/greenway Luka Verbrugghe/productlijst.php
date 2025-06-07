@@ -45,7 +45,7 @@ if(isset($_POST['cboCategorie'])){
    	   <div class="col-md-8">
    	   <h1>Productlijst</h1>
    	   <form name="frmCategorie" method="post">
-   	   <p><select name="cboCategorie">
+   	   <p><select name="cboCategorie" onchange="document.frmCategorie.submit()">
    	   <option value="0">Kies een categorie</option>
        <?= $catkeuzeoutput; ?>
        </select>
